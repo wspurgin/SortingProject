@@ -20,6 +20,16 @@ private:
 	int wordsSize;
 	int copySize;
 
+	//actual sorting algorithms are private, the public function 'sortData'
+	//will call the algorithm(s) that will actually be used.
+	void selectionSort(Word*& arr, int size);
+
+	void insertionSort(Word*& arr, int size);
+
+	void mergeSort(Word*& arr, int start, int end);
+
+	void quickSort() 
+
 public:
 	//Basic constructor that accpets file input string 
 	SortingCompetition(const string& inputFileName);
