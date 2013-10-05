@@ -48,7 +48,14 @@ bool SortingCompetition::readData()
 
 bool SortingCompetition::prepareData()
 {
-
+	if(this->copySize > 0)
+		delete[] copy;
+	this->copySize = this->wordsSize;
+	this->copy = new Word[copySize];
+	for(int i = 0; i < this->copySize; i++)
+	{
+		this->copy[i] = this->word[i];
+	}
 }
 
 
