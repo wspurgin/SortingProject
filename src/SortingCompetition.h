@@ -28,7 +28,7 @@ private:
 
 	void mergeSort(Word*& arr, int start, int end);
 
-	void quickSort() 
+	void quickSort();
 
 public:
 	//Basic constructor that accpets file input string 
