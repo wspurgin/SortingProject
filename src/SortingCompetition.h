@@ -9,6 +9,7 @@ Header file for "SortingCompetition" class
 #define SORTING_COMPETITION_H
 
 #include <string>
+#include <fstream>
 #include "Word.h"
 
 class SortingCompetition
@@ -22,22 +23,27 @@ private:
 
 	void resize(Word*& words, int cap, int size);
 
+	//write function
+	void write(ostream& out);
+
 	//actual sorting algorithms are private, the public function 'sortData'
 	//will call the algorithm(s) that will actually be used.
 	void selectionSort(Word*& arr, int size);
 
-	void insertionSort(Word*& arr, int size);
+	// void insertionSort(Word*& arr, int size);
 
-	void mergeSort(Word*& arr, int start, int end);
+	// void mergeSort(Word*& arr, int start, int end);
 
-	void quickSort(Word*& arr, int start, int end); 
+	// void quickSort(Word*& arr, int start, int end); 
 
 public:
 	//Basic constructor that accpets file input string 
 	SortingCompetition(const string& inputFileName);
 
+	~SortingCompetition();
+
 	//Setter for Inputfile
-	setFileName(const string& inputFileName);
+	void setFileName(const string& inputFileName);
 
 	//Read data from inputFile into words
 	bool readData();

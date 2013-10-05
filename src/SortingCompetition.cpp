@@ -9,13 +9,21 @@ cpp file for "SortingCompetition" class
 #include "Word.h"
 
 
-SortingCompetition:SortingCompetition(const string& inputFileName)
+SortingCompetition::SortingCompetition(const string& inputFileName)
 {
 	this->words = NULL;
 	this->copy = NULL;
 	this->wordsSize = 0;
 	this->copySize = 0;
 	this->inputFile = inputFileName;
+}
+
+SortingCompetition::~SortingCompetition()
+{
+	if(wordsSize > 0)
+		delete [] words;
+	if(copySize > 0)
+		delete [] copy;
 }
 
 void SortingCompetition::resize(Word*& words, int cap, int size)
@@ -28,7 +36,15 @@ void SortingCompetition::resize(Word*& words, int cap, int size)
 		delete [] temp;
 }
 
-SortingCompetition::setFileName(const string& inputFileName)
+void write(ostream& out)
+{
+	out << "Sorted Word Index:" << endl << endl;
+	for(int i = 0; i < this->copySize; i++)
+		out << this->copy[i] << endl;
+	out << endl << endl << "######## END OF INDEX ########" << endl;
+}
+
+void SortingCompetition::setFileName(const string& inputFileName)
 {
 	this->inputFile = inputFileName;
 }
@@ -42,7 +58,31 @@ bool SortingCompetition::readData()
 		if(this->wordsSize > 0)
 			delete [] wordsSize;
 
+		this->wordsSize++;
+		this->words = new Word[this->wordsSize];
+		Word buffer;
+
 		//priming read
+		int i = 0;
+		fin >> buffer;
+		this->words[i] = buffer;
+		i++;
+
+		while(fin >> buffer)
+		{
+			if(i == this->wordsSize)
+			{
+				resize(this->words, this->wordsSize + 1, this->wordsSize);
+				this->wordsSize++;
+			}
+			this->words[i] = buffer;
+		}
+		return true;	
+	}
+	else
+	{
+		cout << "ERROR: FILE NOT FOUND '" << this->inputFile << "'" << endl;
+		return false;
 	}	
 }
 
@@ -66,6 +106,7 @@ void SortingCompetition::outputData(const string& outputFileName)
 	{
 		fstream fout(outputFileName);
 		write(fout);
+		fout.close();
 	}
 }
 
