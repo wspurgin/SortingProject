@@ -1,7 +1,7 @@
 /*
-Will Spurgin
+Nastasha Gerlt, Will Spurgin
 9/13/2013
-Data Structures -- Auto-Indexer
+Data Structures -- Sorting Competition
 "Word" class header file
 */
 

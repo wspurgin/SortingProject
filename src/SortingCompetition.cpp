@@ -11,37 +11,62 @@ cpp file for "SortingCompetition" class
 
 SortingCompetition:SortingCompetition(const string& inputFileName)
 {
+	this->words = NULL;
+	this->copy = NULL;
+	this->wordsSize = 0;
+	this->copySize = 0;
+	this->inputFile = inputFileName;
 }
 
+void SortingCompetition::resize(Word*& words, int cap, int size)
+{
+	Word* temp = words;
+	words = new Word[cap];
+	for(int i = 0; i < size; i++)
+		words[i] = temp[i];
+	if(size > 0)
+		delete [] temp;
+}
 
 SortingCompetition::setFileName(const string& inputFileName)
 {
-	inputFile = inputFileName;
+	this->inputFile = inputFileName;
 }
 
 
 bool SortingCompetition::readData()
 {
+	fstream fin(this->inputFile);
+	if(fin)
+	{
+		if(this->wordsSize > 0)
+			delete [] wordsSize;
+
+		//priming read
+	}	
 }
 
 bool SortingCompetition::prepareData()
 {
+
 }
 
 
 void SortingCompetition::sortData()
 {
-	/*
-	*Sort data (Sorting consists of checking first size and then the 
-	*alphabetical sorting) so 'z' comes before 'all'.
-	*NOTE this function calls the recursive sorting algorithm, it does not
-	*actually hold any of the code specific for the sort.
-	*/
+	selectionSort(this->copy, this->copySize);
 }
 
 
 void SortingCompetition::outputData(const string& outputFileName)
 {
+	if(outputFileName == "stdout")
+		write(cout);
+	else
+	{
+		fstream fout(outputFileName);
+		write(fout);
+	}
 }
 
 
