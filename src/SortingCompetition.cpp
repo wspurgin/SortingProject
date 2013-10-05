@@ -106,35 +106,21 @@ void SortingCompetition::selectionSort(Word*& arr, int size)
 	{
 		for(int j = i +1; j < size; j++)
 		{
-			if(strlen(arr[i]) > strlen(arr[j])
+			if(arr[i].len() > arr[j].len())
 			{
 				//swap two words in an array
-				Word* temp = new Word[strlen(arr[i])];
-				strcpy(temp,arr[i]);
-				delete[] arr[i];
-
-				arr[i] = new Word[strlen(arr[j])];
-				strcpy(arr[i],arr[j]);
-				delete[] arr[j];
-
-				arr[j] = new Word[strlen(temp)];
-				strcpy(arr[j],temp);
-				delete[] temp;
+				Word temp = arr[i];
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
 			}
-			else if(strlen(arr[i]) == strlen(arr[j] && arr[i] < arr[j])
+			else if(arr[i].len() == arr[j].len() && arr[i] < arr[j])
 			{
 				//swap two words in an array
-				Word* temp = new Word[strlen(arr[i])];
-				strcpy(temp,arr[i]);
-				delete[] arr[i];
-
-				arr[i] = new Word[strlen(arr[j])];
-				strcpy(arr[i],arr[j]);
-				delete[] arr[j];
-
-				arr[j] = new Word[strlen(temp)];
-				strcpy(arr[j],temp);
-				delete[] temp;
+				Word temp = arr[i];
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
 			}
 		}
 	}
