@@ -7,7 +7,13 @@
 #  2 October 2013
 #########################################################
 
-test.out : Word.o test.cpp
+main.out : SortingCompetition.o Word.o CompetitionMain.cpp
+	g++ -std=c++11 $^ -o $@
+
+SortingCompetition.o : SortingCompetition.cpp SortingCompetition.h
+	g++ -g -c SortingCompetition.cpp -o $@
+
+test.out : Word.o SortingCompetition.o test.cpp
 	g++ $^ -o $@
 
 Word.o : Word.cpp Word.h
