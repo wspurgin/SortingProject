@@ -175,14 +175,15 @@ istream& operator>>(istream& in, Word& rhs)
 	rhs.string_length_ = 2;
 	char* temp;
 	char c = in.peek();
-
 	//ignore whitespace
-	while(c == ' ' || c == '\n')
+	while(c == ' ' || c == '\n' || c == '\r')
 	{
 		if(c == ' ')
 			in.ignore(256, ' ');
 		else if(c == '\n')
 			in.ignore(256, '\n');
+		else if(c == '\r')
+			in.ignore(256, '\r');
 		c = in.peek();
 	}
 	//Now read in each character until next white space
@@ -192,7 +193,7 @@ istream& operator>>(istream& in, Word& rhs)
 	in.get(rhs.string_, 2);
 	c = in.peek();
 	//Read the rest of the characters
-	while(c != ' ' && c != '\n' && in.good())
+	while(c != ' ' && c != '\n' && '\r' && in.good())
 	{
 		char* temp2 = new char[2];
 		in.get(temp2, 2);

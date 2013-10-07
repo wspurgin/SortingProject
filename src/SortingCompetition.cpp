@@ -6,6 +6,8 @@ Implementation file for "SortingCompetition" class
 */
 
 #include <string>
+#include <time.h>
+#include <stdlib.h>
 #include "Word.h"
 #include "SortingCompetition.h"
 
@@ -45,6 +47,20 @@ void SortingCompetition::write(ostream& out)
 	out << endl << endl << "######## END OF INDEX ########" << endl;
 }
 
+int SortingCompetition::compare(Word& lhs, Word& rhs)
+{
+	if(lhs.len() > rhs.len())
+		return 1;
+	else if(lhs.len() < rhs.len())
+		return -1;
+	else if(lhs > rhs)
+		return -1;
+	else if(lhs < rhs)
+		return 1;
+	else
+		return 0;
+}
+
 void SortingCompetition::setFileName(const string& inputFileName)
 {
 	this->inputFile = inputFileName;
@@ -71,22 +87,28 @@ bool SortingCompetition::readData()
 
 		while(fin >> buffer)
 		{
+			if(!(buffer == "\n"))
+			{
+				if(i == this->wordsSize)
+				{
+					resize(this->words, this->wordsSize + 1, this->wordsSize);
+					this->wordsSize++;
+				}
+					this->words[i] = buffer;
+				i++;
+			}
+		}
+		//read the last entry in buffer into words
+		if(!(buffer == "\n"))
+		{
 			if(i == this->wordsSize)
 			{
 				resize(this->words, this->wordsSize + 1, this->wordsSize);
 				this->wordsSize++;
 			}
-			this->words[i] = buffer;
-			i++;
+			this->words[i] = buffer;	
 		}
-		//read the last entry in buffer into words
-		if(i == this->wordsSize)
-		{
-			resize(this->words, this->wordsSize + 1, this->wordsSize);
-			this->wordsSize++;
-		}
-		this->words[i] = buffer;
-		return true;	
+		return true;
 	}
 	else
 	{
@@ -117,7 +139,8 @@ bool SortingCompetition::prepareData()
 
 void SortingCompetition::sortData()
 {
-	selectionSort(this->copy, this->copySize);
+	// selectionSort(this->copy, this->copySize);
+	quickSort(this->copy, 0, this->copySize-1);
 }
 
 
@@ -174,7 +197,6 @@ void SortingCompetition::selectionSort(Word*& arr, int size)
 			{
 				//swap two words in an array
 				Word temp = arr[i];
-				temp = arr[i];
 				arr[i] = arr[j];
 				arr[j] = temp;
 			}
@@ -182,7 +204,6 @@ void SortingCompetition::selectionSort(Word*& arr, int size)
 			{
 				//swap two words in an array
 				Word temp = arr[i];
-				temp = arr[i];
 				arr[i] = arr[j];
 				arr[j] = temp;
 			}
@@ -190,4 +211,48 @@ void SortingCompetition::selectionSort(Word*& arr, int size)
 	}
 }
 
-
+void SortingCompetition::quickSort(Word*& arr, int start, int end)
+{
+	// srand(time(NULL));
+	if(end - start < 1)
+		return;
+	// Word x = arr[start + rand()%(end-start)];
+	int pivot = start;
+	int i = pivot+1; 
+	int j = end;
+	while(i < j)
+	{
+		while(compare(arr[i], arr[pivot]) <= 0)
+		{
+			if(i >= j)
+				break;
+			i++;
+		}
+		while(compare(arr[j], arr[pivot]) >= 0)
+		{
+			if(j < i)
+				break;
+			j--;
+		}
+		if(i < j)
+		{
+			Word temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+	}
+	if(compare(arr[j], arr[pivot]) <= 0)
+	{
+		Word temp = arr[pivot];
+		arr[pivot] = arr[j];
+		arr[j] = temp;
+	}
+	else if(compare(arr[i], arr[pivot]) <= 0)
+	{
+		Word temp = arr[pivot];
+		arr[pivot] = arr[i];
+		arr[i] = temp;
+	}
+	quickSort(arr, start, j-1);
+	quickSort(arr, j+1, end);
+}		

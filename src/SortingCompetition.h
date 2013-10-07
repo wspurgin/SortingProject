@@ -26,6 +26,9 @@ private:
 	//write function
 	void write(ostream& out);
 
+	//custom compare function because of length requirement
+	int compare(Word& lhs, Word& rhs);
+
 	//actual sorting algorithms are private, the public function 'sortData'
 	//will call the algorithm(s) that will actually be used.
 	void selectionSort(Word*& arr, int size);
@@ -34,7 +37,8 @@ private:
 
 	// void mergeSort(Word*& arr, int start, int end);
 
-	// void quickSort(Word*& arr, int start, int end); 
+	void quickSort(Word*& arr, int start, int end);
+
 
 public:
 	//Basic constructor that accpets file input string 
