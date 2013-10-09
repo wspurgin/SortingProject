@@ -18,6 +18,7 @@ SortingCompetition::SortingCompetition(const string& inputFileName)
 	this->copy = NULL;
 	this->wordsSize = 0;
 	this->copySize = 0;
+	this->copyCapacity = 0;
 	this->inputFile = inputFileName;
 }
 
@@ -25,7 +26,7 @@ SortingCompetition::~SortingCompetition()
 {
 	if(wordsSize > 0)
 		delete [] words;
-	if(copySize > 0)
+	if(copyCapacity > 0)
 		delete [] copy;
 }
 
@@ -61,6 +62,13 @@ int SortingCompetition::compare(Word& lhs, Word& rhs)
 		return 0;
 }
 
+void SortingCompetition::swap(Word*& arr, int i, int j)
+{
+	Word temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
+}
+
 void SortingCompetition::setFileName(const string& inputFileName)
 {
 	this->inputFile = inputFileName;
@@ -87,27 +95,24 @@ bool SortingCompetition::readData()
 
 		while(fin >> buffer)
 		{
-			if(!(buffer == "\n"))
-			{
-				if(i == this->wordsSize)
-				{
-					resize(this->words, this->wordsSize + 1, this->wordsSize);
-					this->wordsSize++;
-				}
-					this->words[i] = buffer;
-				i++;
-			}
-		}
-		//read the last entry in buffer into words
-		if(!(buffer == "\n"))
-		{
 			if(i == this->wordsSize)
 			{
-				resize(this->words, this->wordsSize + 1, this->wordsSize);
-				this->wordsSize++;
+				resize(this->words, this->wordsSize*2, this->wordsSize);
+				this->wordsSize = this->wordsSize*2;
 			}
-			this->words[i] = buffer;	
+				this->words[i] = buffer;
+			i++;
 		}
+		//read the last entry in buffer into words
+		this->copySize = i;
+		if(i == this->wordsSize)
+		{
+			resize(this->words, this->wordsSize + 1, this->wordsSize);
+			this->wordsSize++;
+		}
+		this->words[i] = buffer;
+		this->copySize++;
+
 		return true;
 	}
 	else
@@ -125,10 +130,10 @@ bool SortingCompetition::prepareData()
 		<< " readData() first." << endl;
 		return false;
 	}
-	if(this->copySize > 0)
+	if(this->copyCapacity > 0)
 		delete[] copy;
-	this->copySize = this->wordsSize;
-	this->copy = new Word[copySize];
+	this->copyCapacity = this->copySize;
+	this->copy = new Word[copyCapacity];
 	for(int i = 0; i < this->copySize; i++)
 	{
 		this->copy[i] = this->words[i];
@@ -141,9 +146,10 @@ void SortingCompetition::sortData()
 {
 	// selectionSort(this->copy, this->copySize);
 	quickSort(this->copy, 0, this->copySize-1);
+	// quickSort2(this->copy, 0, this->copySize-1);
 }
 
-
+	
 void SortingCompetition::outputData(const string& outputFileName)
 {
 	if(outputFileName == "stdout")
@@ -217,10 +223,10 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 	if(end - start < 1)
 		return;
 	// Word x = arr[start + rand()%(end-start)];
-	int pivot = start;
-	int i = pivot+1; 
+	int pivot = start / end;
+	int i = start; 
 	int j = end;
-	while(i < j)
+	while(i < j && i < pivot && j > pivot)
 	{
 		while(compare(arr[i], arr[pivot]) <= 0)
 		{
@@ -236,6 +242,7 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 		}
 		if(i < j)
 		{
+			// swap(arr, i, j);
 			Word temp = arr[i];
 			arr[i] = arr[j];
 			arr[j] = temp;
@@ -243,12 +250,14 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 	}
 	if(compare(arr[j], arr[pivot]) <= 0)
 	{
+		// swap(arr, pivot, j);
 		Word temp = arr[pivot];
 		arr[pivot] = arr[j];
 		arr[j] = temp;
 	}
 	else if(compare(arr[i], arr[pivot]) <= 0)
 	{
+		// swap(arr, pivot, i);
 		Word temp = arr[pivot];
 		arr[pivot] = arr[i];
 		arr[i] = temp;
@@ -256,3 +265,28 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 	quickSort(arr, start, j-1);
 	quickSort(arr, j+1, end);
 }		
+
+void SortingCompetition::quickSort2(Word*& arr, int start, int end)
+{
+	if(end - start < 1)
+		return;
+	int pivot = end;
+	int i = start;
+	int j = end - 1;
+	while(i < j)
+	{
+		if(compare(arr[i], arr[pivot]) > 0)
+		{
+			if(compare(arr[j], arr[pivot]) <= 0)
+				swap(arr, i, j);
+			else
+				j--;
+		}
+		else
+			i++;
+	}
+	if(compare(arr[i], arr[pivot]) > 0)
+		swap(arr, i, pivot);
+	quickSort2(arr, start, i-1);
+	quickSort2(arr, i+1, end);
+}

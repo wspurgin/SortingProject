@@ -20,6 +20,7 @@ private:
 	string inputFile;
 	int wordsSize;
 	int copySize;
+	int copyCapacity;
 
 	void resize(Word*& words, int cap, int size);
 
@@ -29,13 +30,16 @@ private:
 	//custom compare function because of length requirement
 	int compare(Word& lhs, Word& rhs);
 
+	//swap arr[i] value with arr[j] value
+	void swap(Word*& arr, int i, int j);
+
 	//actual sorting algorithms are private, the public function 'sortData'
 	//will call the algorithm(s) that will actually be used.
 	void selectionSort(Word*& arr, int size);
 
-	// void insertionSort(Word*& arr, int size);
+	// void heapSort(Word*& arr, int size);
 
-	// void mergeSort(Word*& arr, int start, int end);
+	void quickSort2(Word*& arr, int start, int end);
 
 	void quickSort(Word*& arr, int start, int end);
 

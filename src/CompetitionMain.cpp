@@ -51,6 +51,5 @@ int main(int argc, char** argv)
 
     //Print sorted data to a file, and print the avg.
     sorter.outputData(argv[2]);
-    std::cout << "copySize = " << sorter.getCopySize();
     std::cout << "Average sorting time: " << totalMilliseconds / NUM_REPS << " milliseconds" << std::endl;
 }
