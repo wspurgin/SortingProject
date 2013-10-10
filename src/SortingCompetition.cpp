@@ -54,7 +54,7 @@ int SortingCompetition::compare(Word& lhs, Word& rhs)
 		return 1;
 	else if(lhs.len() < rhs.len())
 		return -1;
-	else if(lhs > rhs)
+	if(lhs > rhs)
 		return -1;
 	else if(lhs < rhs)
 		return 1;
@@ -218,15 +218,13 @@ void SortingCompetition::selectionSort(Word*& arr, int size)
 }
 
 void SortingCompetition::quickSort(Word*& arr, int start, int end)
-{
-	// srand(time(NULL));
+{	
 	if(end - start < 1)
 		return;
-	// Word x = arr[start + rand()%(end-start)];
-	int pivot = start / end;
+	int pivot = end;
 	int i = start; 
-	int j = end;
-	while(i < j && i < pivot && j > pivot)
+	int j = end - 1;
+	while(i < j)
 	{
 		while(compare(arr[i], arr[pivot]) <= 0)
 		{
@@ -242,7 +240,6 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 		}
 		if(i < j)
 		{
-			// swap(arr, i, j);
 			Word temp = arr[i];
 			arr[i] = arr[j];
 			arr[j] = temp;
@@ -250,14 +247,12 @@ void SortingCompetition::quickSort(Word*& arr, int start, int end)
 	}
 	if(compare(arr[j], arr[pivot]) <= 0)
 	{
-		// swap(arr, pivot, j);
 		Word temp = arr[pivot];
 		arr[pivot] = arr[j];
 		arr[j] = temp;
 	}
 	else if(compare(arr[i], arr[pivot]) <= 0)
 	{
-		// swap(arr, pivot, i);
 		Word temp = arr[pivot];
 		arr[pivot] = arr[i];
 		arr[i] = temp;
@@ -270,15 +265,18 @@ void SortingCompetition::quickSort2(Word*& arr, int start, int end)
 {
 	if(end - start < 1)
 		return;
-	int pivot = end;
+	int pivot = (start + end)/2;
 	int i = start;
-	int j = end - 1;
+	int j = end;
 	while(i < j)
 	{
 		if(compare(arr[i], arr[pivot]) > 0)
 		{
 			if(compare(arr[j], arr[pivot]) <= 0)
+			{
 				swap(arr, i, j);
+				i++; j--;
+			}
 			else
 				j--;
 		}
@@ -287,6 +285,6 @@ void SortingCompetition::quickSort2(Word*& arr, int start, int end)
 	}
 	if(compare(arr[i], arr[pivot]) > 0)
 		swap(arr, i, pivot);
-	quickSort2(arr, start, i-1);
-	quickSort2(arr, i+1, end);
+	quickSort2(arr, start, pivot-1);
+	quickSort2(arr, pivot+1, end);
 }
