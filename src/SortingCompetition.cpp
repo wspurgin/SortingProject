@@ -299,14 +299,14 @@ void SortingCompetition::insertionSort(Word*& arr, int start, int end)
 {
 	for(int i = start + 1; i < end; i++)
 	{
-		int val = Word[i];
+		int val = arr[i];
 		int hole = i;
-		while(hole > 0 && val < data[hole - 1])
+		while(hole > 0 && val < arr[hole - 1])
 		{
-			data[hole] = data[hole - 1];
+			arr[hole] = arr[hole - 1];
 			hole--;
 		}
-		data[hole] = val;
+		arr[hole] = val;
 	}
 }
 
