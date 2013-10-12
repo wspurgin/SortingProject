@@ -288,3 +288,11 @@ void SortingCompetition::quickSort2(Word*& arr, int start, int end)
 	quickSort2(arr, start, pivot-1);
 	quickSort2(arr, pivot+1, end);
 }
+
+
+void SortingCompetition::heapSort(Word*& arr, int start, int end)
+{
+	//ummm I was just not sure what to do bc I wanted to snuggle...
+}
+
+
