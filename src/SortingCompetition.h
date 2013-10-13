@@ -33,6 +33,8 @@ private:
 	//swap arr[i] value with arr[j] value
 	void swap(Word**& arr, int i, int j);
 
+	void merge(Word**& arr, int sizeA, Word**& brr, int sizeB);
+
 	//actual sorting algorithms are private, the public function 'sortData'
 	//will call the algorithm(s) that will actually be used.
 	void selectionSort(Word**& arr, int size);
