@@ -70,5 +70,16 @@ int main()
 	}
 	cout << "Operator Tests Complete for Word Class" << endl;
 
+	cout << "Dynamic allocation testing for Word Class " << endl;
+
+	Word* dynamic = new Word("memory");
+	Word* other;
+	cout << *dynamic << endl;
+	other = new Word();
+	*other = *dynamic;
+	cout << *other << endl;
+	delete other;
+	cout << *dynamic << endl;
+
 	return 0;
 }

@@ -15,14 +15,14 @@ Header file for "SortingCompetition" class
 class SortingCompetition
 {
 private:
-	Word* words;
-	Word* copy;
+	Word** words;
+	Word** copy;
 	string inputFile;
 	int wordsSize;
 	int copySize;
 	int copyCapacity;
 
-	void resize(Word*& words, int cap, int size);
+	void resize(Word**& words, int cap, int size);
 
 	//write function
 	void write(ostream& out);
@@ -31,17 +31,17 @@ private:
 	int compare(Word& lhs, Word& rhs);
 
 	//swap arr[i] value with arr[j] value
-	void swap(Word*& arr, int i, int j);
+	void swap(Word**& arr, int i, int j);
 
 	//actual sorting algorithms are private, the public function 'sortData'
 	//will call the algorithm(s) that will actually be used.
-	void selectionSort(Word*& arr, int size);
+	void selectionSort(Word**& arr, int size);
 
-	// void heapSort(Word*& arr, int size);
+	// void heapSort(Word**& arr, int size);
 
-	void quickSort2(Word*& arr, int start, int end);
+	void quickSort2(Word**& arr, int start, int end);
 
-	void quickSort(Word*& arr, int start, int end);
+	void quickSort(Word**& arr, int start, int end);
 
 
 public:
@@ -71,9 +71,9 @@ public:
 	void outputData(const string& outputFileName);
 
 	//Getters
-	Word* getWords();
+	Word** getWords();
 
-	Word* getCopy();
+	Word** getCopy();
 
 	int getWordsSize();
 
