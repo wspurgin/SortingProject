@@ -301,3 +301,26 @@ void SortingCompetition::quickSort2(Word**& arr, int start, int end)
 	quickSort2(arr, start, pivot-1);
 	quickSort2(arr, pivot+1, end);
 }
+
+
+void SortingCompetition::heapSort(Word**& arr, int start, int end)
+{
+	//ummm I was just not sure what to do bc I wanted to snuggle...
+}
+
+void SortingCompetition::insertionSort(Word**& arr, int start, int end)
+{
+	for(int i = start + 1; i < end; i++)
+	{
+		Word* val = arr[i];
+		int hole = i;
+		while(hole > 0 && *val < *arr[hole - 1])
+		{
+			arr[hole] = arr[hole - 1];
+			hole--;
+		}
+		arr[hole] = val;
+	}
+}
+
+
