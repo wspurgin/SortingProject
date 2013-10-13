@@ -158,9 +158,10 @@ void SortingCompetition::sortData()
 {
 	// selectionSort(this->copy, this->copySize);
 	// insertionSort(this->copy, 0, this->copySize-1);
-	if(this->copyCapacity > 100000)
+	// if(this->copyCapacity > 100000)
 		quickSort(this->copy, 0, (this->copySize-1)/2);
-	quickSort(this->copy, 0, this->copySize-1);
+	quickSort(this->copy, (this->copySize-1)/2+1, this->copySize-1);
+	merge2(this->copy, 0, (this->copySize-1)/2, (this->copySize-1)/2+1, this->copySize-1);
 }
 
 	
@@ -314,29 +315,36 @@ void SortingCompetition::insertionSort(Word**& arr, int start, int end)
 	}
 }
 
-void SortingCompetition::merge(Word**& arr, int sizeA, Word**& brr, int sizeB)
+
+
+
+
+
+
+
+
+
+
+
+
+
+void SortingCompetition::merge2(Word**& arr, int startA, int endA, int startB, int endB)
 {
-	int i = 0;
-	int j = 0;
+	int i = startA;
+	int j = startB;
 	int k = 0;
-	while (k != this->copySize && i <= sizeA && j <= sizeB)
+	while (k != this->copySize-1 && i <= endA && j <= endB)
 	{
-		if(comp(*arr[i], *brr[j]) <= 0)
+		if(compare(*arr[i], *arr[j]) <= 0)
 		{
-			this->copy[k] = *arr[i];
+			swap(arr, k, i);
 			i++;
 		}
         else
 		{
-			this->copy[k] = *brr[j];
+			swap(arr, k, j);
 			j++;
 		}
 		k++;
 	}
 }
-
-
-
-
-
-
