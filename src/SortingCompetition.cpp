@@ -157,6 +157,7 @@ bool SortingCompetition::prepareData()
 void SortingCompetition::sortData()
 {
 	// selectionSort(this->copy, this->copySize);
+	// insertionSort(this->copy, 0, this->copySize-1);
 	if(this->copyCapacity > 100000)
 		quickSort(this->copy, 0, (this->copySize-1)/2);
 	quickSort(this->copy, 0, this->copySize-1);
@@ -252,24 +253,14 @@ void SortingCompetition::quickSort(Word**& arr, int start, int end)
 			j--;
 		}
 		if(i < j)
-		{
-			Word* temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
-		}
+			swap(arr, i, j);
 	}
+
 	if(compare(*arr[j], *arr[pivot]) <= 0)
-	{
-		Word* temp = arr[pivot];
-		arr[pivot] = arr[j];
-		arr[j] = temp;
-	}
+		swap(arr, j, pivot);
 	else if(compare(*arr[i], *arr[pivot]) <= 0)
-	{
-		Word* temp = arr[pivot];
-		arr[pivot] = arr[i];
-		arr[i] = temp;
-	}
+		swap(arr, i, pivot);
+
 	quickSort(arr, start, j-1);
 	quickSort(arr, j+1, end);
 }		
@@ -310,11 +301,11 @@ void SortingCompetition::heapSort(Word**& arr, int start, int end)
 
 void SortingCompetition::insertionSort(Word**& arr, int start, int end)
 {
-	for(int i = start + 1; i < end; i++)
+	for(int i = start + 1; i <= end; i++)
 	{
 		Word* val = arr[i];
 		int hole = i;
-		while(hole > 0 && *val < *arr[hole - 1])
+		while(hole > 0 && compare(*val, *arr[hole - 1]) <= 0)
 		{
 			arr[hole] = arr[hole - 1];
 			hole--;

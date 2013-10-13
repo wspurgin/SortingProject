@@ -37,7 +37,7 @@ private:
 	//will call the algorithm(s) that will actually be used.
 	void selectionSort(Word**& arr, int size);
 
-	void heapSort(Word**& arr, int size);
+	void heapSort(Word**& arr, int start, int end);
 
 	void quickSort2(Word**& arr, int start, int end);
 
