@@ -323,25 +323,31 @@ void SortingCompetition::insertionSort(Word**& arr, int start, int end)
 	}
 }
 
-void SortingCompetition::merge(Word**& arr, int sizeA, Word**& brr, int sizeB)
+void SortingCompetition::merge(Word**& arr, int startA, int startB, int size)
 {
-	int i = 0;
-	int j = 0;
+	int i = startA;
+	int j = startB;
 	int k = 0;
-	while (k != this->copySize && i <= sizeA && j <= sizeB)
+	Word** temp = new Word*[size+1];
+	while (k != size && i < startB && j <= size)
 	{
-		if(comp(*arr[i], *brr[j]) <= 0)
+		if(comp(*arr[i], *arr[j]) <= 0)
 		{
-			this->copy[k] = *arr[i];
+			*temp[k] = arr[i];
 			i++;
 		}
         else
 		{
-			this->copy[k] = *brr[j];
+			*temp[k] = *arr[j];
 			j++;
 		}
 		k++;
 	}
+
+	arr = temp;
+	for(int n = 0; n <= size; n++)
+			delete temp[n];
+	delete [] temp;
 }
 
 
