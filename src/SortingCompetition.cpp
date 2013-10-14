@@ -161,7 +161,7 @@ void SortingCompetition::sortData()
 	// if(this->copyCapacity > 100000)
 		quickSort(this->copy, 0, (this->copySize-1)/2);
 	quickSort(this->copy, (this->copySize-1)/2+1, this->copySize-1);
-	merge2(this->copy, 0, (this->copySize-1)/2, (this->copySize-1)/2+1, this->copySize-1);
+	merge(this->copy, 0, (this->copySize-1)/2+1, this->copySize-1);
 }
 
 	
@@ -266,40 +266,6 @@ void SortingCompetition::quickSort(Word**& arr, int start, int end)
 	quickSort(arr, j+1, end);
 }		
 
-void SortingCompetition::quickSort2(Word**& arr, int start, int end)
-{
-	if(end - start < 1)
-		return;
-	int pivot = (start + end)/2;
-	int i = start;
-	int j = end;
-	while(i < j)
-	{
-		if(compare(*arr[i], *arr[pivot]) > 0)
-		{
-			if(compare(*arr[j], *arr[pivot]) <= 0)
-			{
-				swap(arr, i, j);
-				i++; j--;
-			}
-			else
-				j--;
-		}
-		else
-			i++;
-	}
-	if(compare(*arr[i], *arr[pivot]) > 0)
-		swap(arr, i, pivot);
-	quickSort2(arr, start, pivot-1);
-	quickSort2(arr, pivot+1, end);
-}
-
-
-void SortingCompetition::heapSort(Word**& arr, int start, int end)
-{
-	//ummm I was just not sure what to do bc I wanted to snuggle...
-}
-
 void SortingCompetition::insertionSort(Word**& arr, int start, int end)
 {
 	for(int i = start + 1; i <= end; i++)
@@ -315,36 +281,34 @@ void SortingCompetition::insertionSort(Word**& arr, int start, int end)
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-void SortingCompetition::merge2(Word**& arr, int startA, int endA, int startB, int endB)
+void SortingCompetition::merge(Word**& arr, int startA, int startB, int size)
 {
 	int i = startA;
 	int j = startB;
 	int k = 0;
-	while (k != this->copySize-1 && i <= endA && j <= endB)
+	Word** temp = arr;
+	arr = new Word*[size+1];
+	while (k != size+1)
 	{
-		if(compare(*arr[i], *arr[j]) <= 0)
+		if(i < startB)
 		{
-			swap(arr, k, i);
-			i++;
+			if(j == size+1 || compare(*temp[i], *temp[j]) <= 0)
+			{
+				arr[k] = temp[i];
+				i++;
+			}
+        	else if(j <= size)
+			{
+				arr[k] = temp[j];
+				j++;
+			}
 		}
-        else
+		else if(j <= size)
 		{
-			swap(arr, k, j);
+			arr[k] = temp[j];
 			j++;
 		}
 		k++;
 	}
+	delete [] temp;
 }
