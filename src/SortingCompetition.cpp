@@ -156,10 +156,7 @@ bool SortingCompetition::prepareData()
 
 void SortingCompetition::sortData()
 {
-	// selectionSort(this->copy, this->copySize);
-	// insertionSort(this->copy, 0, this->copySize-1);
-	// if(this->copyCapacity > 100000)
-		quickSort(this->copy, 0, (this->copySize-1)/2);
+	quickSort(this->copy, 0, (this->copySize-1)/2);
 	quickSort(this->copy, (this->copySize-1)/2+1, this->copySize-1);
 	merge(this->copy, 0, (this->copySize-1)/2+1, this->copySize-1);
 }
