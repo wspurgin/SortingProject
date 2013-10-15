@@ -8,16 +8,16 @@
 #########################################################
 
 main.out : SortingCompetition.o Word.o CompetitionMain.cpp
-	g++ -g -std=c++11 $^ -o $@
+	g++ -O2 -std=c++11 $^ -o $@
 
 SortingCompetition.o : SortingCompetition.cpp SortingCompetition.h
-	g++ -g -c SortingCompetition.cpp -o $@
+	g++ -O2 -c SortingCompetition.cpp -o $@
 
 test.out : Word.o SortingCompetition.o test.cpp
-	g++ -g $^ -o $@
+	g++ -O2 $^ -o $@
 
 Word.o : Word.cpp Word.h
-	g++ -g -c Word.cpp -o $@
+	g++ -O2 -c Word.cpp -o $@
 
 clean :
 	\rm -f *.o
